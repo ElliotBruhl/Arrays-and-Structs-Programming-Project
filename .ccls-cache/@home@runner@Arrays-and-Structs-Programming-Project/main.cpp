@@ -9,8 +9,15 @@ and outputs the formatted data with the totals and average
 #define DAYS_RUN 7
 using namespace std;
 
+// struct to store data for each runner
+struct Runner {
+  char name[10];
+  int miles[DAYS_RUN];
+  int total;
+  double average;
+};
 // read and store names/miles func
-bool read_names(char names[NUM_RUNNERS][10], int miles[NUM_RUNNERS][DAYS_RUN]) {
+bool read_names(Runner runners[NUM_RUNNERS]) {
   ifstream file;
   file.open("runners.txt");
   if (!file.is_open()) {
@@ -27,7 +34,7 @@ bool read_names(char names[NUM_RUNNERS][10], int miles[NUM_RUNNERS][DAYS_RUN]) {
   return true;
 }
 // calc each total/average
-void calc_totals(int miles[NUM_RUNNERS][DAYS_RUN], int totals[NUM_RUNNERS], double averages[NUM_RUNNERS]) {
+void calc_totals(Runner runners[NUM_RUNNERS]) {
   int count;
   for (int i = 0; i < NUM_RUNNERS; i++) {
     count = 0;
@@ -39,7 +46,7 @@ void calc_totals(int miles[NUM_RUNNERS][DAYS_RUN], int totals[NUM_RUNNERS], doub
   }
 }
 // output results
-void displayResults(char names[NUM_RUNNERS][10], int miles[NUM_RUNNERS][DAYS_RUN], int totals[NUM_RUNNERS], double averages[NUM_RUNNERS]) {
+void displayResults(Runner runner[NUM_RUNNERS]) {
   // print title
   cout << setw(15) << "Name" << setw(10) << "Day 1" << setw(10) << "Day 2"
        << setw(10) << "Day 3" << setw(10) << "Day 4" << setw(10) << "Day 5"
@@ -57,19 +64,15 @@ void displayResults(char names[NUM_RUNNERS][10], int miles[NUM_RUNNERS][DAYS_RUN
 }
 
 int main() {
+  // stores all structs
+  Runner runners[NUM_RUNNERS];
   // read file for data
-  char names[NUM_RUNNERS][10];
-  int milesRan[NUM_RUNNERS][DAYS_RUN];
-  if (!read_names(names, milesRan))
+  if (!read_names(runners))
     return 1;
-
   // calculate totals and averages
-  int totals[NUM_RUNNERS];
-  double averages[NUM_RUNNERS];
-  calc_totals(milesRan, totals, averages);
-
+  calc_totals(runners);
   // output results
-  displayResults(names, milesRan, totals, averages);
+  displayResults(runners);
 
   return 0;
 }
