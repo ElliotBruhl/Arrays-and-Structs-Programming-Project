@@ -25,9 +25,9 @@ bool read_names(Runner runners[NUM_RUNNERS]) {
     return false;
   }
   for (int i = 0; i < NUM_RUNNERS; i++) {
-    file >> names[i];
+    file >> runners[i].name;
     for (int j = 0; j < DAYS_RUN; j++) {
-      file >> miles[i][j];
+      file >> runners[i].miles[j];
     }
   }
   file.close();
@@ -39,14 +39,14 @@ void calc_totals(Runner runners[NUM_RUNNERS]) {
   for (int i = 0; i < NUM_RUNNERS; i++) {
     count = 0;
     for (int j = 0; j < DAYS_RUN; j++) {
-      count += miles[i][j];
+      count += runners[i].miles[j];
     }
-    totals[i] = count;
-    averages[i] = double(count) / DAYS_RUN;
+    runners[i].total = count;
+    runners[i].average = double(count) / DAYS_RUN;
   }
 }
 // output results
-void displayResults(Runner runner[NUM_RUNNERS]) {
+void displayResults(Runner runners[NUM_RUNNERS]) {
   // print title
   cout << setw(15) << "Name" << setw(10) << "Day 1" << setw(10) << "Day 2"
        << setw(10) << "Day 3" << setw(10) << "Day 4" << setw(10) << "Day 5"
@@ -55,11 +55,11 @@ void displayResults(Runner runner[NUM_RUNNERS]) {
   cout << fixed << setprecision(1);
   // print data
   for (int i = 0; i < NUM_RUNNERS; i++) {
-    cout << setw(15) << names[i] << setw(10) << miles[i][0] << setw(10)
-         << miles[i][1] << setw(10) << miles[i][2] << setw(10) << miles[i][3]
-         << setw(10) << miles[i][4] << setw(10) << miles[i][5] << setw(10)
-         << miles[i][6] << setw(10) << totals[i] << setw(10) << averages[i]
-         << "\n";
+    cout << setw(15) << runners[i].name;
+    for (int j = 0; j < DAYS_RUN; j++) {
+      cout << setw(10) << runners[i].miles[j];
+    }
+    cout << setw(10) << runners[i].total << setw(10) << runners[i].average << "\n";
   }
 }
 
