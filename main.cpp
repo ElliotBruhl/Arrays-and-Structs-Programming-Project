@@ -48,11 +48,11 @@ void displayResults(char names[NUM_RUNNERS][10], int miles[NUM_RUNNERS][DAYS_RUN
   cout << fixed << setprecision(1);
   // print data
   for (int i = 0; i < NUM_RUNNERS; i++) {
-    cout << setw(15) << names[i] << setw(10) << miles[i][0] << setw(10)
-         << miles[i][1] << setw(10) << miles[i][2] << setw(10) << miles[i][3]
-         << setw(10) << miles[i][4] << setw(10) << miles[i][5] << setw(10)
-         << miles[i][6] << setw(10) << totals[i] << setw(10) << averages[i]
-         << "\n";
+    cout << setw(15) << names[i];
+    for (int j = 0; j< DAYS_RUN; j++) {
+      cout << setw(10) << miles[i][j];
+    }
+    cout << setw(10) << totals[i] << setw(10) << averages[i] << "\n";
   }
 }
 
